@@ -66,8 +66,8 @@ function generatePassword() {
 	var numOfChar = document.getElementById("numOfChar").value;
 	var lCaseEl = document.getElementById("lCase");
 	var uCaseEl = document.getElementById("uCase");
-	var number = document.getElementById("number");
-	var special = document.getElementById("special");
+	var numberEl = document.getElementById("number");
+	var specialEl = document.getElementById("special");
 	var lCaseChars = "abcdefghijklmnopqrstuvwxyz";
 	var uCaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	var numChars = "012345678";
@@ -83,11 +83,11 @@ function generatePassword() {
 		availableLetters = availableLetters + uCaseChars;
 		charTypes = charTypes++;
 	}
-	if (number.checked) {
+	if (numberEl.checked) {
 		availableLetters = availableLetters + numChars;
 		charTypes = charTypes++;
 	}
-	if (special.checked) {
+	if (specialEl.checked) {
 		availableLetters = availableLetters + specialChars;
 		charTypes = charTypes++;
 	}
@@ -98,69 +98,88 @@ function generatePassword() {
 	}
 
 	//Checks to see if at least 1 of each checked character type exists and inserts it if it doesn't
-	var randomPWLCaseIndex = false;
-	var randomPWUCaseIndex = false;
-	var randomPWNumIndex = false;
-	var randomPWSpecIndex = false;
+	var randomLPWIndex = false;
+	var randomUPWIndex = false;
+	var randomNumPWIndex = false;
+	var randomSpecPWIndex = false;
+	var hasLower = false;
+	var hasUpper = false;
+	var hasNumber = false;
+	var hasSpecial = false;
 
 	if (lCaseEl.checked) {
-		var hasLower = false;
 		for (var l in lCaseChars) {
 			if (newPW.includes(l)) {
-				hasLower = true;
+				randomLPWIndex = newPW.indexOf(l);
 			}
 		}
 		if (!hasLower) {
-			randomPWLCaseIndex = Math.floor(Math.random() * lCaseChars.length);
-			var randomLCaseChar = lCaseChars[randomPWLCaseIndex];
-			var randomPWIndex = Math.floor(Math.random() * newPW.length);
-			newPW[randomPWIndex] = randomLCaseChar;
+			var randomLCaseIndex = Math.floor(Math.random() * lCaseChars.length);
+			var randomLCaseChar = lCaseChars[randomLCaseIndex];
+			randomLPWIndex = Math.floor(Math.random() * newPW.length);
+			newPW[randomLPWIndex] = randomLCaseChar;
 		}
+		hasLower = true;
+		console.log(randomLPWIndex);
 	}
 
 	if (uCaseEl.checked) {
-		var hasUpper = false;
 		for (var u in uCaseChars) {
 			if (newPW.includes(u)) {
-				hasUpper = true;
+				randomUPWIndex = newPW.indexOf(u);
 			}
 		}
 		if (!hasUpper) {
-			randomPWUCaseIndex = Math.floor(Math.random() * uCaseChars.length);
-			var randomUCaseChar = uCaseChars[randomPWUCaseIndex];
-			var randomPWIndex = Math.floor(Math.random() * newPW.length);
-			newPW[randomPWIndex] = randomUCaseChar;
+			var randomUCaseIndex = Math.floor(Math.random() * uCaseChars.length);
+			var randomUCaseChar = uCaseChars[randomUCaseIndex];
+			randomUPWIndex = Math.floor(Math.random() * newPW.length);
+			while (randomUPWIndex === randomLPWIndex) {
+				randomUPWIndex = Math.floor(Math.random() * newPW.length);
+			}
+			newPW[randomUPWIndex] = randomUCaseChar;
 		}
+		hasUpper = true;
+		console.log(randomUPWIndex);
 	}
-	if (number.checked) {
-		var hasNumber = false;
+
+	if (numberEl.checked) {
 		for (var n in numChars) {
 			if (newPW.includes(n)) {
 				hasNumber = true;
+				randomNumPWIndex = newPW.indexOf(n);
 			}
 		}
 		if (!hasNumber) {
-			randomPWNumIndex = Math.floor(Math.random() * numChars.length);
-			var randomNumChar = numChars[randomPWNumIndex];
-			var randomPWIndex = Math.floor(Math.random() * newPW.length);
-			newPW[randomPWIndex] = randomNumChar;
-		}
-	}
-	if (special.checked) {
-		var hasSpecial = false;
-		for (var s in specialChars) {
-			if (newPW.includes(s)) {
-				hasSpecial = true;
+			var randomNumIndex = Math.floor(Math.random() * numChars.length);
+			var randomNumChar = numChars[randomNumIndex];
+			randomNumPWIndex = Math.floor(Math.random() * newPW.length);
+			while (randomNumPWIndex === randomLPWIndex || randomNumPWIndex === randomUPWIndex) {
+				console.log(randomNumPWIndex);
+				randomNumPWIndex = Math.floor(Math.random() * newPW.length);
+				console.log(randomNumPWIndex);
 			}
-		}
-		if (!hasSpecial) {
-			randomPWLCaseIndex = Math.floor(Math.random() * specialChars.length);
-			var randomSpecChar = specialChars[randomPWSpecIndex];
-			var randomPWIndex = Math.floor(Math.random() * newPW.length);
-			newPW[randomPWIndex] = randomSpecChar;
+			console.log(randomNumPWIndex);
+			newPW[randomNumPWIndex] = randomNumChar;
 		}
 	}
 
+	if (specialEl.checked) {
+		for (var s in specialChars) {
+			if (newPW.includes(s)) {
+				hasSpecial = true;
+				randomSpecPWIndex = newPW.indexOf(s);
+			}
+		}
+		if (!hasSpecial) {
+			var randomSpecIndex = Math.floor(Math.random() * specialChars.length);
+			var randomSpecChar = specialChars[randomSpecIndex];
+			randomSpecPWIndex = Math.floor(Math.random() * newPW.length);
+			while (randomSpecPWIndex === randomLPWIndex || randomSpecPWIndex === randomUPWIndex || randomSpecPWIndex === randomNumPWIndex) {
+				randomSpecPWIndex = Math.floor(Math.random() * newPW.length);
+			}
+			newPW[randomSpecPWIndex] = randomSpecChar;
+		}
+	}
 	console.log(newPW);
 	pwAttributes.returnValue = newPW;
 }
