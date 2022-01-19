@@ -1,3 +1,21 @@
-# JavaScript By: Raymond Cerney
+# Password Generator in JavaScript
 
-## HTML Framework Originally By: University of Minnesota - Twin Cities - Web Development Bootcamp
+Generates a random password based on selected attributes.
+
+Attributes include:
+Mandatory:
+Number of characters: (8-128)
+
+At least 1:
+Lowercase letters
+Uppercase letters
+Numbers
+Special characters: (!"#$%&'()\*+,-./:;&lt;=&gt;?@[\]^\_`{|}~)
+
+### Website:
+
+https://raymondcerneytech.github.io/JavaScript-Password-Generator/
+
+### Preview:
+
+![Picture of Raymond Cerney's Portfolio](./assets/images/PassGen.PNG)
