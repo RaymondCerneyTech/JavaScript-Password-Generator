@@ -18,4 +18,4 @@ https://raymondcerneytech.github.io/JavaScript-Password-Generator/
 
 ### Preview:
 
-![Picture of Raymond Cerney's Portfolio](./assets/images/PassGen.PNG)
+![Picture of Password Generator](./assets/images/PassGen.PNG)
